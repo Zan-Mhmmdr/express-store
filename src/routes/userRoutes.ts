@@ -1,9 +1,20 @@
-import express from 'express';
-import { getUsers, createUser, updateUser, deleteUser } from '../controllers/userController';
+const express = require("express");
+const router = express.Router();
+const userController = require("../controllers/users.controller");
 
-export const app = express();
+// GET all users
+router.get("/", userController.getUsers);
 
-app.get("/users", getUsers);
-app.post("/users", createUser);
-app.put("/users/:id", updateUser);
-app.delete("/users/:id", deleteUser);
+// GET user by id
+router.get("/:id", userController.getUserById);
+
+// CREATE user
+router.post("/", userController.createUser);
+
+// UPDATE user
+router.put("/:id", userController.updateUser);
+
+// DELETE user
+router.delete("/:id", userController.deleteUser);
+
+module.exports = router;
