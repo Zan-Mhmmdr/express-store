@@ -1,7 +1,5 @@
-// controllers/users.controller.js
-
 // GET /users
-exports.getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
     // nanti ganti ke DB
     const users = [
@@ -22,7 +20,7 @@ exports.getUsers = async (req, res) => {
 };
 
 // GET /users/:id
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -42,7 +40,7 @@ exports.getUserById = async (req, res) => {
 };
 
 // POST /users
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   try {
     const { name, email } = req.body;
 
@@ -71,7 +69,7 @@ exports.createUser = async (req, res) => {
 };
 
 // PUT /users/:id
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, email } = req.body;
@@ -94,7 +92,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // DELETE /users/:id
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
 
