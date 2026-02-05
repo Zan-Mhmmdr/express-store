@@ -5,7 +5,4 @@ export const db = mysql.createPool({
     user: 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'express_store',
-
-
-
 })
