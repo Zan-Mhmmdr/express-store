@@ -1,13 +1,32 @@
-import { register } from "../service/auth.service";
+import { login, register } from "../service/auth.service";
+import jwt from "jsonwebtoken";
+import { Request, Response } from "express";
 
-export const registerAuth = (req: any, res: any) => {
+export const registerAuth = async (req: Request, res: Response) => {
   const data = req.body;
-  register(data);
+  await register(data);
   res.send("User registered successfully");
 };
 
-export const loginAuth = (req: any, res: any) => {
-  const data = req.body;
-  // Implement login logic here
-  res.send("User logged in successfully");
+export const loginAuth = async (req: Request, res: Response) => {
+  try {
+    const user = await login(req.body);
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "1h" },
+    );
+
+    res.json({
+      message: "Login successful",
+      token,
+      user,
+    });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid email or password" });
+  }
 };
