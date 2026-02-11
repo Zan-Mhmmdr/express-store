@@ -14,8 +14,9 @@ export const register = async (data: any) => {
   return result;
 };
 
-export const login = async (email: string, password: string) => {
+export const login = async (data: any) => {
   const sql = "SELECT * FROM users WHERE email = ?";
+  const { email, password } = data;
   const [rows]: any = await db.execute(sql, [email]);
 
   if (rows.length === 0) {
@@ -23,7 +24,7 @@ export const login = async (email: string, password: string) => {
   }
 
   const user = rows[0];
-  const isPasswordMatch = bcrypt.compare(password, user.password);
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
 
   if (!isPasswordMatch) {
     throw new Error("Invalid email or password");
