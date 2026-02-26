@@ -6,6 +6,14 @@ interface JwtPayload {
   email: string;
 }
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any; 
+    }
+  }
+}
+
 export const authMiddleware = (
   req: Request,
   res: Response,
