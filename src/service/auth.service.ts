@@ -1,23 +1,28 @@
 import bcrypt from "bcryptjs";
 import { db } from "../config/db";
+import { RowDataPacket } from "mysql2";
 
 export const register = async (data: any) => {
-  const hashedPassword = bcrypt.hashSync(data.password, 10);
+  const { name, email, password } = data;
+
+  if (!name || !email || !password) {
+    throw new Error("email, email, and password are required");
+  }
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
 
   const sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
 
-  const [result] = await db.execute(sql, [
-    data.username,
-    data.email,
-    hashedPassword,
-  ]);
+  const [result] = await db.execute(sql, [name, email, hashedPassword]);
+
+  console.log("User registered with ID:", (result as any).insertId);
   return result;
 };
 
 export const login = async (data: any) => {
   const sql = "SELECT * FROM users WHERE email = ?";
   const { email, password } = data;
-  const [rows]: any = await db.execute(sql, [email]);
+  const [rows] = await db.execute<RowDataPacket[]>(sql, [email]);
 
   if (rows.length === 0) {
     throw new Error("Invalid email or password");
