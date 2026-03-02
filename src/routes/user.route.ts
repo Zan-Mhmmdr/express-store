@@ -5,5 +5,6 @@ import { profile } from "../controller/user.controller";
 const UserRoutes = Router();
 
 UserRoutes.get("/me", authMiddleware, profile);
+UserRoutes.put("/me", authMiddleware, profile)
 
 export default UserRoutes;
