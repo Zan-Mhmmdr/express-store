@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.route";
 import UserRoutes from "./routes/user.route";
 import { db } from "./config/db";
+import productRoutes from "./routes/product.route";
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ db.getConnection()
  
 app.use("/api/auth", authRoutes);
 app.use("/api/users", UserRoutes);
+app.use("/api/products", productRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

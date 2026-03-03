@@ -3,17 +3,17 @@ import { db } from "../config/db";
 import { RowDataPacket } from "mysql2";
 
 export const register = async (data: any) => {
-  const { name, email, password } = data;
+  const { username, email, password } = data;
 
-  if (!name || !email || !password) {
-    throw new Error("email, email, and password are required");
+  if (!username || !email || !password) {
+    throw new Error("Username, email, and password are required");
   }
 
   const hashedPassword = bcrypt.hashSync(password, 10);
 
   const sql = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
 
-  const [result] = await db.execute(sql, [name, email, hashedPassword]);
+  const [result] = await db.execute(sql, [username, email, hashedPassword]);
 
   console.log("User registered with ID:", (result as any).insertId);
   return result;
